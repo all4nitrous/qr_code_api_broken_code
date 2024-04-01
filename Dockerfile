@@ -1,30 +1,8 @@
-<<<<<<< HEAD
-FROM python:3.12-bullseye
-<<<<<<< HEAD
-RUN apt-get update && apt-get install -y anki
-WORKDIR /Devops
-COPY . /Devops/
-ENTRYPOINT [ "python" ]
-CMD [ "app.py" ]
-=======
-WORKDIR /myapp
-COPY . /myapp/
-RUN pip install -r requirements.txt
-ENTRYPOINT [ "python" ]
-CMD [ "main.py" ]
->>>>>>> 29a015c (first commit)
-=======
-# Use an official lightweight Python image.
-# 3.12-slim variant is chosen for a balance between size and utility.
+# Use an official lightweight Python image
+# Using the 3.12-slim-bullseye variant for a balance between size and utility
 FROM python:3.12-slim-bullseye as base
 
-# Set environment variables:
-# PYTHONUNBUFFERED: Prevents Python from buffering stdout and stderr
-# PYTHONFAULTHANDLER: Enables the fault handler for segfaults
-# PIP_NO_CACHE_DIR: Disables the pip cache for smaller image size
-# PIP_DEFAULT_TIMEOUT: Avoids hanging during install
-# PIP_DISABLE_PIP_VERSION_CHECK: Suppresses the "new version" message
-# POETRY_VERSION: Specifies the version of poetry to install
+# Set environment variables for Python and pip
 ENV PYTHONUNBUFFERED=1 \
     PYTHONFAULTHANDLER=1 \
     PIP_NO_CACHE_DIR=off \
@@ -40,7 +18,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy only the requirements, to cache them in Docker layer
+# Copy only the requirements file to leverage Docker layer caching
 COPY ./requirements.txt /myapp/requirements.txt
 
 # Install Python dependencies
@@ -49,17 +27,17 @@ RUN pip install --upgrade pip \
 
 # Copy the rest of your application's code
 COPY . /myapp
+
 # Copy the startup script and make it executable
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
+
 # Run the application as a non-root user for security
 RUN useradd -m myuser
 USER myuser
 
-# Tell Docker about the port we'll run on.
+# Expose the port the app will run on
 EXPOSE 8000
 
-
-
+# Start the application
 CMD ["/start.sh"]
->>>>>>> b5fbfd7 (improvements)
