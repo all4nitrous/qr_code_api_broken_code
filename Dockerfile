@@ -6,8 +6,6 @@ COPY Devops/requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY Devops/ .
-
 ENTRYPOINT [ "python" ]
 
 CMD [ "main.py" ]
