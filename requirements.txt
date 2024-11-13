@@ -1,8 +1,8 @@
 #anki==24.6.3
 annotated-types==0.7.0
-apparmor==3.1.7
+#apparmor==3.1.7
 aqt==24.6.3
-attrs==23.2.1.dev0
+#attrs==23.2.1.dev0
 autocommand==2.2.2
 beautifulsoup4==4.12.3
 blinker==1.7.0
